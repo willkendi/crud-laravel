@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ModelBook extends Model
 {
     protected $table='book';
+    protected $fillable=['title','id_user','pages','price']; 
 
 
     public function relUsers(){// Método para relacionar a tabela usuários com a books

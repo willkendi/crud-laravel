@@ -38,8 +38,8 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        echo "teste";
+    {   $users=$this->objUser->all();
+        return view('create',compact('users'));
     }
 
     /**
@@ -48,9 +48,18 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    //Método que recebe os dados do formulário
     public function store(Request $request)
     {
-        //
+        $cad = $this->objBook->create([
+            'title'=>$request->title,
+            'pages'=>$request->pages,
+            'price'=>$request->price,
+            'id_user'=>$request->id_user
+        ]);
+        if($cad){
+            return redirect('books');
+        }
     }
       
     /**
@@ -75,7 +84,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = $this->objBook->find($id);
+        $users = $this->objUser->all();
+        return view('create',compact('book','users'));
     }
 
     /**
@@ -87,7 +98,14 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->objBook->where(['id'=>$id])->update([
+            'title'=>$request->title,
+            'pages'=>$request->pages,
+            'price'=>$request->price,
+            'id_user'=>$request->id_user
+            
+        ]);
+        return redirect('books');
     }
 
     /**
